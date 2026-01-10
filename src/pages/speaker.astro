@@ -1,0 +1,36 @@
+---
+import ImageMod from "@/components/ImageMod.astro";
+import Base from "@/layouts/Base.astro";
+import { getListPage } from "@/lib/contentParser.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import CallToAction from "@/partials/CallToAction.astro";
+import Testimonial from "@/partials/Testimonial.astro";
+import { FaCheck } from "react-icons/fa";
+
+const homepage = await getListPage("speaker", "-index");
+
+const { banner } = homepage.data;
+---
+
+<Base>
+<!-- Banner -->
+<section>
+  <div class="grid columns-1 gap-y-10 justify-center text-center">
+      <!-- Image Column -->
+      {
+        banner.image && (
+            <ImageMod
+              src={banner.image}
+              alt="banner image"
+              format="webp"
+            />
+          <h1> Public Speaking </h1>
+        <p class="text-lg text-gray-700 dark:text-gray-300"> 
+        Whether it's keynote speeches or emceeing events, I'm well equipped for all public speaking needs your organization may have. Rates start as low as $100--contact me today for a formal quote! 
+        </p>
+        )
+      }
+  </div>
+</section>
+<!-- /Banner -->
+</Base>

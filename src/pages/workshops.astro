@@ -1,0 +1,123 @@
+---
+import ImageMod from "@/components/ImageMod.astro";
+import Base from "@/layouts/Base.astro";
+import { getListPage } from "@/lib/contentParser.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import CallToAction from "@/partials/CallToAction.astro";
+import Testimonial from "@/partials/Testimonial.astro";
+import { FaCheck } from "react-icons/fa";
+
+const homepage = await getListPage("workshops", "-index");
+
+const { banner } = homepage.data;
+const programs = [
+  {
+    title: "Moving With Grief, Not Past It: LGBTQ+ Grieving",
+    details: "A one-hour workshop for LGBTQ+ attendees & allies on the fundamentals of mourning, & unique facets of grief in the LGBTQ+ community."
+  },
+  {
+    title: "Nailing the Internship Process (Offered for both computer science & higher education students)",
+    details: "An interactive workshop for college students on interviewing, resume development, & tips on navigating internships."
+  },
+  {
+    title: "Queer & Here.... But Where Do I Go Next?",
+    details: "A 2-hour workshop for LGBTQ+ highschool seniors on post-secondary career options & navigating Queer identities in the workplace."
+  },
+  {
+    title: "Mind the Gap: Technology Inequities in Higher Educational Settings",
+    details: "A 1-hour workshop for educational professionals on the basics of the Digital Divide, AI, & being mindful of technological inequities."
+  },
+  {
+    title: "I See You: Bringing Grief into the Secondary Classroom",
+    details: "A 1-hour workshop educational professionals on navigating personal grief, student grief, & common manifestations within classroom environments."
+  },
+   {
+    title: "Advocacy 101 for LGBTQ+ Allies",
+    details: "A 3-hour workshop on the basics of LGBTQ+ inclusion & advocacy--all questions welcomed! Heavily interactive & meant as an introductory crash course to allyship."
+  },
+  {
+    title: "Pivoting: Discovering Your Passion Amidst the Chaos",
+    details: "A 1-hour motivational workshop on navigating finding a career during unprecedented times. Includes tips & advice for applying, interviewing, & obtaining offers."
+  },
+  {
+    title: "How Does That Make You Feel? & Other Questions Not to Ask Youth About Their Mental Health",
+    details: "A 1-2 hour workshop (depending on clientele needs) on identifying youth populations at greater risk of mental health issues, identifying warning signs, & more. Tailored depending on intended audience (community members, parents, educators, etc)."
+  }
+]
+---
+
+<Base>
+<!-- Banner -->
+<section class="section pt-14">
+  <div class="container">
+    <div class="row items-center">
+      
+      <!-- Text Column -->
+      <div class="lg:col-6 md:col-12 mb-8 lg:mb-0">
+        <h1
+          set:html={markdownify(banner.title)}
+          class="mb-4 text-h3 lg:text-h1 text-left"
+        />
+        <p set:html={markdownify(banner.content)} class="mb-8 text-left" />
+        <ul>
+            {banner.bulletpoints.map((bullet: string) => (
+                <li class="relative mb-4 pl-6">
+                	<FaCheck className={"absolute left-0 top-1.5"} />
+                	<span set:html={markdownify(bullet)} />
+                </li>
+            ))}
+        </ul>
+      </div>
+
+      <!-- Image Column -->
+      {
+        banner.image && (
+          <div class="lg:col-6 md:col-12 flex justify-center">
+            <ImageMod
+              src={banner.image}
+              height={380}
+              width={600}
+              alt="banner image"
+              format="webp"
+            />
+          </div>
+        )
+      }
+
+    </div>
+  </div>
+</section>
+<!-- /Banner -->
+
+<section class="max-w-3xl mx-auto mb-5">
+  <h2 class="font-semibold text-center">
+    Previous Program Facilitations
+  </h2>
+  <p class="mb-5"> These are sample programs I've offered in the past! I am always open to creating new workshops depending on your team's needs. <a class='underline text-red-700' href='mailto:emilymillerfischer@gmail.com'> Send me an email </a> to schedule a consultation--the first meeting is always free! <p>
+  <div class="space-y-4">
+    {programs.map((program) => (
+      <details class="group border border-gray-300 rounded-lg p-4">
+        <summary class="flex cursor-pointer items-center justify-between font-medium list-none">
+          <h5>{program.title}</h5>
+
+          <!-- Arrow -->
+          <svg
+            class="h-5 w-5 transition-transform duration-300 group-open:rotate-180"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </summary>
+
+        <div class="mt-3">
+          {program.details}
+        </div>
+      </details>
+    ))}
+  </div>
+</section>
+
+</Base>

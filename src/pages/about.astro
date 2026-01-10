@@ -1,15 +1,21 @@
 ---
-import ImageMod from "@/components/ImageMod.astro";
+import config from "@/config/config.json";
 import Base from "@/layouts/Base.astro";
 import { getListPage } from "@/lib/contentParser.astro";
-import { markdownify } from "@/lib/utils/textConverter";
-import { render } from "astro:content";
+import PageHeader from "@/partials/PageHeader.astro";
+import Card from "@/components/Card.astro";
+import Section from "@/components/Section.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import SkillLayout from "@/components/SkillLayout.astro";
 
-const aboutIndex = await getListPage("about", "-index");
-const { Content } = await render(aboutIndex);
-const { title, description, meta_title, image } = aboutIndex.data;
+const about = await getListPage("about", "-index");
+const { title, description, meta_title, image } = about.data;
+const tools = ['Zotero', 'Google Suite', 'Microsoft Suite']
+const languages = ['Python', 'SQL', 'PHP', 'VBA', 'JavaScript', 'Tailwind', 'Astro', 'HTML/CSS']
+const general = ['Grant Writing', 'Data Analysis', 'Event Management', 'Budgeting', 'Policy Writing', 'Public Relations', 'Public Speaking', 'Lecturing']
+const softSkills = ['Communications', 'Leadership', 'Conflict Resolution', 'Collaboration', 'Time Management']
 
-if (aboutIndex.data.draft) {
+if (about.data.draft) {
   return Astro.redirect("/404");
 }
 ---
@@ -20,28 +26,146 @@ if (aboutIndex.data.draft) {
   description={description}
   image={image}
 >
-  <section class="section-sm">
-    <div class="container">
-      <div class="row justify-center">
-        <div class="text-center md:col-10 lg:col-7">
-          {
-            image && (
-              <ImageMod
-                class="mx-auto mb-6 rounded-lg"
-                src={image}
-                width={200}
-                height={200}
-                alt={title}
-                format="webp"
-              />
-            )
-          }
-          <h2 set:html={markdownify(title)} class="h3 mb-6" />
-          <div class="content">
-            <Content />
-          </div>
-        </div>
-      </div>
+
+<section class="container mx-auto px-4 py-12">
+
+  <!-- Profile -->
+  <div class="flex flex-col lg:flex-row items-center gap-8 mb-12">
+    <div class="w-40 h-40 rounded-full overflow-hidden shrink-0">
+      <img src="/images/profile.jpg" alt="Profile" class="w-full h-full object-cover" />
     </div>
-  </section>
-</Base>
+    <div class="text-center lg:text-left">
+      <h1 class="text-4xl font-bold mb-2">Everyone has a story worth sharing. </h1>
+      <p class="text-lg text-gray-700 dark:text-gray-300">
+      As a LGBTQ+ first-generation college graduate & griever exploring the world, I realized stories from people like me were distinctly lacking. That's why, as a graduate student, 
+      programmer by trader, & researcher, I pivoted to professional speaking & community activism--To uplift voices which often go unheard, & ensure 
+      </i> everyone </i> has a seat at our tables. Check out what I'm interested in & working on below! Want to help out? Contact me at: <b> emilymillerfischer@gmail.com</b>. I look forward to hearing from you.
+      </p>
+    </div>
+  </div>
+
+  <!-- Experience -->
+		<Section title='Experience'>
+      <Card
+				heading='Data Management & Student Success Coach'
+				subheading='West Chester University'
+				date='Jan. 2026 - Present'
+				imagePath=''
+				altText='Lorem, ipsum dolor sit'
+				imageClass='h-12 w-auto md:-left-16'
+			>
+				<ul class='ml-4 list-disc text-muted-foreground'>
+					<li>
+						Analyzes 200+ student case-files & develops reports on student-success, areas of improvement
+						<li>Develops relationship with mentees to create personalized success plans </li>
+            <li>Manages significant case-load to meet deadlines with precision</li>
+					</li>
+				</ul>
+			</Card>
+      <Card
+				heading='Substitute Teacher'
+				subheading='Substitute Teacher Service'
+				date='Apr. 2024 - Present'
+				imagePath=''
+				altText='Lorem, ipsum dolor sit'
+				imageClass='h-12 w-auto md:-left-16'
+			>
+				<ul class='ml-4 list-disc text-muted-foreground'>
+					<li>
+						Substitute for K-12th grade classes, focusing on Makerspaces & Technology courses at the 7th-12th grade level
+						<li>Develops relationship with diverse student audiences to faciliate learning in teachers' absence </li>
+            <li>Ensures inclusive learning environment through conflict remediation & classroom management techniques </li>
+					</li>
+				</ul>
+			</Card>
+			<Card
+				heading='Assistant Festival Director [Volunteer]'
+				subheading='Lancaster Pride'
+				date='Sep. 2025 - Present'
+				imagePath=''
+				altText='Lorem, ipsum dolor sit'
+				imageClass='h-12 w-auto md:-left-16'
+			>
+				<ul class='ml-4 list-disc text-muted-foreground'>
+					<li>
+						Manages a large event budget for a 10,000+ attendee annual festival ("Lancaster Pride") 
+						<li>Coordinates & schedules 20+ volunteers for event facilitation </li>
+            <li>Develops promotional materials & curates donor relationships </li>
+					</li>
+				</ul>
+			</Card>
+			<Card
+				heading='Board Member [Volunteer]'
+				subheading='LGBTQ+ Equality Alliance'
+				date='Sep. 2025 - Present'
+				imagePath=''
+				altText='Lorem, ipsum dolor sit'
+				imageClass='h-12 w-auto md:-left-16'
+			>
+				<ul class='ml-4 list-disc text-muted-foreground'>
+					<li>
+						Manages $80,000+ budget to coordinate 6+ monthly events & 3 annual events
+						<li>Faciliates connections with community members & local officials </li>
+            <li>Develops workshops, facilitations, & public speeches </li>
+					</li>
+				</ul>
+			</Card>
+		</Section>
+
+  <!-- Education -->
+  <Section title='Education'>
+      <Card
+				heading='Master of Science - Higher Education Policy & Student Affairs'
+				subheading='West Chester University'
+				date='Expected Jan. 2028'
+				imagePath=''
+				altText='Lorem, ipsum dolor sit'
+				imageClass='h-12 w-auto md:-left-16'
+			>
+			</Card>
+      <Card
+				heading='Bachelor of Science - Computer Science'
+				subheading='West Chester University'
+				date='Dec. 2024'
+				imagePath=''
+				altText='Lorem, ipsum dolor sit'
+				imageClass='h-12 w-auto md:-left-16'
+			>
+			</Card>
+		</Section>
+
+  <!-- Projects -->
+  <Section title='Projects'>
+			<div class='flex flex-col gap-y-3 sm:flex-row sm:gap-x-3 sm:gap-y-0'>
+				<ProjectCard
+					heading='Don&#39;t Be a Stranger - A LGBTQ+ Peer-To-Peer Grief Group'
+					subheading='The first LGBTQ+-specific peer-to-peer grief support group in southeast PA. Link coming soon!'
+					imagePath='/src/assets/DBAS.jpg'
+					altText='Example'
+					class='w-full sm:w-1/2'
+				/>
+				<ProjectCard
+					heading= 'This Website!'
+					subheading='Trippy, right? Programmed using a mash-up of Astro & Tailwind, with some JS sprinkled in.'
+					imagePath='/src/assets/website.jpg'
+					altText='Example'
+					class='w-full sm:w-1/2'
+				/>
+        <ProjectCard
+					heading= 'Precious Moments to Penises: Posters & Their Effect on American Culture in the Early HIV/AIDS Epidemic'
+					subheading='A qualitative analysis of poster series from the University of Rochesters HIV/AIDS poster collection. In final review in the journal Humanities. '
+					imagePath='/src/assets/website.jpg'
+					altText='Example'
+					class='w-full sm:w-1/2'
+				/>
+			</div>
+		</Section>
+
+  <!-- Skills -->
+  <Section title='Skills & Interests'>
+			<SkillLayout title='Tools' skills={tools} />
+			<SkillLayout title='Languages' skills={languages} />
+			<SkillLayout title='General' skills={general} />
+			<SkillLayout title='Soft Skills' skills={softSkills} />
+		</Section>
+</Layout>

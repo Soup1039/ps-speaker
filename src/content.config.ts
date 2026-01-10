@@ -1,5 +1,6 @@
 import { glob } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
+import type { FaSpeakerDeck } from "react-icons/fa6";
 
 const commonFields = {
   title: z.string(),
@@ -100,6 +101,62 @@ const homepageCollection = defineCollection({
   }),
 });
 
+const workshopsCollection = defineCollection({
+  loader: glob({
+    pattern: "-*.{md,mdx}",
+    base: "src/content/workshops",
+  }),
+  schema: z.object({
+    banner: z.object({
+      title: z.string(),
+      content: z.string(),
+      bulletpoints: z.array(z.string()).default([]),
+      image: z.string(),
+    })
+  }),
+});
+
+const pricingCollection = defineCollection({
+  loader: glob({
+    pattern: "-*.{md,mdx}",
+    base: "src/content/pricing",
+  }),
+  schema: z.object({
+    banner: z.object({
+      title: z.string(),
+      content: z.string(),
+      bulletpoints: z.array(z.string()).default([]),
+    })
+  }),
+});
+
+const speakerCollection = defineCollection({
+  loader: glob({
+    pattern: "-*.{md,mdx}",
+    base: "src/content/speaker",
+  }),
+  schema: z.object({
+    banner: z.object({
+      title: z.string(),
+      content: z.string(),
+      image: z.string(),
+    }),
+    features: z.array(
+      z.object({
+        title: z.string(),
+        image: z.string(),
+        content: z.string(),
+        bulletpoints: z.array(z.string()),
+        button: z.object({
+          enable: z.boolean(),
+          label: z.string(),
+          link: z.string(),
+        }),
+      }),
+    ),
+  }),
+});
+
 // Call to Action collection schema
 const ctaSectionCollection = defineCollection({
   loader: glob({
@@ -149,6 +206,9 @@ export const collections = {
   pages: pagesCollection,
   about: aboutCollection,
   contact: contactCollection,
+  workshops: workshopsCollection,
+  speaker: speakerCollection,
+  pricing: pricingCollection,
 
   // sections
   ctaSection: ctaSectionCollection,

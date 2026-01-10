@@ -1,0 +1,51 @@
+---
+import ImageMod from "@/components/ImageMod.astro";
+import Base from "@/layouts/Base.astro";
+import { getListPage } from "@/lib/contentParser.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import CallToAction from "@/partials/CallToAction.astro";
+import Testimonial from "@/partials/Testimonial.astro";
+import { FaCheck } from "react-icons/fa";
+
+const homepage = await getListPage("pricing", "-index");
+
+const { banner } = homepage.data;
+---
+
+<Base>
+<!-- Banner -->
+<section class="section pt-14">
+      <div class="content-center">
+        <h1
+          set:html={markdownify(banner.title)}
+          class="mb-4 text-h3 lg:text-h1 text-center"
+        />
+        <p set:html={markdownify(banner.content)} class="mx-auto text-center max-w-3xl"/>
+        <ul class="mt-6 flex flex-col items-center">
+        {banner.bulletpoints.map((bullet: string) => (
+            <li class="mb-4 flex items-center gap-2 text-center">
+            <FaCheck className="shrink-0" />
+            <span set:html={markdownify(bullet)} />
+            </li>
+        ))}   
+        </ul>
+      </div>
+
+</section>
+<section class="py-16">
+  <div class="max-w-3xl mx-auto px-6 text-center">
+    <h2 class="text-3xl font-bold mb-6">Get in Touch</h2>
+    <p class="text-lg mb-10">
+      Thank you for your interest in working together! To help make the best use of your time during your free initial consultation, please fill out this form. I'll get back to you as soon as possible!
+    </p>
+    <a href="https://forms.gle/LXPbj3UnLq5Dgfcn8" target="_blank" rel="noopener" class="mx-auto inline-block bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors">
+      Fill Out the Consultation Form
+    </a>
+    </div>
+
+
+
+</section>
+
+<!-- /Banner -->
+</Base>

@@ -1,0 +1,17 @@
+---
+const { as: Tag = 'a', class: className, title, href, style = 'button' } = Astro.props
+---
+<Tag
+	class={[
+  className,
+  'inline-flex items-center gap-x-1 rounded-lg bg-primary-foreground border border-border px-2 py-1 text-sm transition-all  hover:bg-teal-950/40 hover:shadow-xl/50',
+		!href && 'cursor-default',
+		style === 'pill' && 'rounded-xl'
+].join(' ')}
+	href={href}
+    data-astro-prefetch
+>
+	<slot name='icon-before' />
+	<p>{title}</p>
+	<slot name='icon-after' />
+</Tag>
